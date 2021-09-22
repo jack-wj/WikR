@@ -1,0 +1,213 @@
+<!--
+    THIS EXAMPLE WAS DOWNLOADED FROM https://echarts.apache.org/examples/zh/editor.html?c=bar-label-rotation
+-->
+<!DOCTYPE html>
+<html style="height: 100%">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body style="height: 100%; margin: 0">
+        <div id="container" style="height: 100%"></div>
+
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+        <!-- Uncomment this line if you want to dataTool extension
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/dist/extension/dataTool.min.js"></script>
+        -->
+        <!-- Uncomment this line if you want to use gl extension
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl@2/dist/echarts-gl.min.js"></script>
+        -->
+        <!-- Uncomment this line if you want to echarts-stat extension
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat@latest/dist/ecStat.min.js"></script>
+        -->
+        <!-- Uncomment this line if you want to use map
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/map/js/china.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/map/js/world.js"></script>
+        -->
+        <!-- Uncomment these two lines if you want to use bmap extension
+        <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=<Your Key Here>"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/dist/extension/bmap.min.js"></script>
+        -->
+
+        <script type="text/javascript">
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom);
+var app = {};
+
+var option;
+
+
+
+var posList = [
+    'left', 'right', 'top', 'bottom',
+    'inside',
+    'insideTop', 'insideLeft', 'insideRight', 'insideBottom',
+    'insideTopLeft', 'insideTopRight', 'insideBottomLeft', 'insideBottomRight'
+];
+
+app.configParameters = {
+    rotate: {
+        min: -90,
+        max: 90
+    },
+    align: {
+        options: {
+            left: 'left',
+            center: 'center',
+            right: 'right'
+        }
+    },
+    verticalAlign: {
+        options: {
+            top: 'top',
+            middle: 'middle',
+            bottom: 'bottom'
+        }
+    },
+    position: {
+        options: posList.reduce(function (map, pos) {
+            map[pos] = pos;
+            return map;
+        }, {})
+    },
+    distance: {
+        min: 0,
+        max: 100
+    }
+};
+
+app.config = {
+    rotate: 90,
+    align: 'left',
+    verticalAlign: 'middle',
+    position: 'insideBottom',
+    distance: 15,
+    onChange: function () {
+        var labelOption = {
+            normal: {
+                rotate: app.config.rotate,
+                align: app.config.align,
+                verticalAlign: app.config.verticalAlign,
+                position: app.config.position,
+                distance: app.config.distance
+            }
+        };
+        myChart.setOption({
+            series: [{
+                label: labelOption
+            }, {
+                label: labelOption
+            }, {
+                label: labelOption
+            }, {
+                label: labelOption
+            }]
+        });
+    }
+};
+
+
+var labelOption = {
+    show: true,
+    position: app.config.position,
+    distance: app.config.distance,
+    align: app.config.align,
+    verticalAlign: app.config.verticalAlign,
+    rotate: app.config.rotate,
+    formatter: '{c}  {name|{a}}',
+    fontSize: 16,
+    rich: {
+        name: {
+        }
+    }
+};
+
+option = {
+    tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'shadow'
+        }
+    },
+    title:{
+      text:'不同种子不同年份产量对比', 
+      left:'center',
+    },
+    legend: {
+        data: ['958青农11', '中科4号', '登海605号', '天泰33号'],
+        left:'center',
+        top:'30'
+    },
+    toolbox: {
+        show: true,
+        orient: 'vertical',
+        left: 'right',
+        top: 'center',
+        feature: {
+            mark: {show: true},
+            dataView: {show: true, readOnly: false},
+            magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+            restore: {show: true},
+            saveAsImage: {show: true}
+        }
+    },
+    xAxis: [
+        {
+            type: 'category',
+            axisTick: {show: false},
+            data: ['2016', '2017', '2018', '2019', '2020']
+        }
+    ],
+    yAxis: [
+        {
+            type: 'value'
+        }
+    ],
+    series: [
+        {
+            name: '958青农11',
+            type: 'bar',
+            barGap: 0,
+            label: labelOption,
+            emphasis: {
+                focus: 'series'
+            },
+            data: [320, 332, 301, 334, 390]
+        },
+        {
+            name: '中科4号',
+            type: 'bar',
+            label: labelOption,
+            emphasis: {
+                focus: 'series'
+            },
+            data: [220, 182, 191, 234, 290]
+        },
+        {
+            name: '登海605号',
+            type: 'bar',
+            label: labelOption,
+            emphasis: {
+                focus: 'series'
+            },
+            data: [150, 232, 201, 154, 190]
+        },
+        {
+            name: '天泰33号',
+            type: 'bar',
+            label: labelOption,
+            emphasis: {
+                focus: 'series'
+            },
+            data: [98, 77, 101, 99, 40]
+        }
+    ]
+};
+
+if (option && typeof option === 'object') {
+    myChart.setOption(option);
+}
+
+        </script>
+    </body>
+</html>
+    
